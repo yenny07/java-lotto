@@ -12,7 +12,7 @@ import static spark.Spark.get;
 public class WebUILottoApplication {
     public static void main(String[] args) {
         LottoMachine lottoMachine = new LottoMachine();
-        lottoMachine.buyTickets();
+        lottoMachine.run();
     }
 
 }
