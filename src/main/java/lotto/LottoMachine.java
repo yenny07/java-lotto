@@ -1,17 +1,21 @@
 package lotto;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LottoMachine {
 
     public void run() {
         int ticketCount;
-        String bonusNumber;
+        int bonusNumber;
         List<List> tickets;
-        List<String> winningNumber;
+        List<Integer> winningNumber;
 
         ticketCount = buyTickets();
         tickets = makeTickets(ticketCount);
+        // System.out.println(tickets);
+        winningNumber = inputWinningNumber();
+        bonusNumber = inputBonusNumber();
 
     }
 
@@ -47,6 +51,26 @@ public class LottoMachine {
         Collections.sort(ticket);
 
         return ticket;
+    }
+
+    private List<Integer> inputWinningNumber() {
+        System.out.println("지난 주 당첨 번호를 입력해주세요.");
+        Scanner scanner = new Scanner(System.in);
+        String inputString = scanner.nextLine();
+        List<String> stringNumber = Arrays.asList(inputString.split(","));
+        List<Integer> winningNumber = stringNumber.stream()
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        return winningNumber;
+    }
+
+    private int inputBonusNumber() {
+        System.out.println("보너스 번호를 입력해주세요.");
+        Scanner scanner = new Scanner(System.in);
+        String bonusNumber = scanner.nextLine();
+
+        return Integer.parseInt(bonusNumber);
     }
 
 }
