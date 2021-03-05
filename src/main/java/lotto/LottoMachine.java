@@ -10,13 +10,19 @@ public class LottoMachine {
         int ticketCount = Integer.parseInt(inputMoney) / 1000;
         System.out.println(ticketCount + "개를 구매했습니다.");
 
+        makeTickets(ticketCount);
+    }
+
+    private void makeTickets(int ticketCount) {
+        List<List> tickets = new ArrayList<>();
+
         for(int i = 0; i < ticketCount; i++){
-            List<Integer> ticket = makeTicket();
-            System.out.println(ticket);
+            tickets.add(createNumbers());
+            System.out.println(tickets);
         }
     }
 
-    private List<Integer> makeTicket() {
+    private List<Integer> createNumbers() {
         List<Integer> ticket = new ArrayList<>();
 
         for(int i = 1; i <= 45; i++){
