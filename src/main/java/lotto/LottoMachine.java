@@ -18,7 +18,7 @@ public class LottoMachine {
         winningNumber = inputWinningNumber();
         bonusNumber = inputBonusNumber();
         hits = matcher(tickets, winningNumber, bonusNumber);
-
+        printResult(hits, ticketCount * 1000);
     }
 
     private int buyTickets() {
@@ -118,6 +118,20 @@ public class LottoMachine {
         }
 
         return rank;
+    }
+
+    private void printResult(int[] hits, int inputMoney) {
+        Rank[] ranks = Rank.values();
+        int totalPrize = 0;
+
+        System.out.println("당첨 통계");
+        System.out.println("========");
+        for (Rank rank : ranks) {
+            System.out.println(rank.getHit() + "개 일치 (" + rank.getPrize() + "원) - " + hits[rank.ordinal()] + "개");
+            totalPrize += rank.getPrize() * hits[rank.ordinal()];
+        }
+
+        System.out.println("총 수익률은 " + (totalPrize / inputMoney) + "입니다.");
     }
 
 }
