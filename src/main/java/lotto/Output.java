@@ -13,7 +13,7 @@ public class Output {
             totalPrize += rank.getPrize() * hits[rank.ordinal()];
         }
 
-        System.out.println("총 수익률은 " + (totalPrize / inputMoney) + "%입니다.");
+        System.out.println("총 수익률은 " + (totalPrize / inputMoney) + "입니다.");
     }
 
 }

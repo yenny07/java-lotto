@@ -24,8 +24,12 @@ public class WinningNumber extends ArrayList<Integer> {
         }
     }
 
-    public void inputBonusNumber() {
+    public void inputBonusNumber() throws Exception {
         Input input = new Input();
         bonusNumber = input.inputInt("보너스 번호를 입력해주세요.");
+
+        if (this.contains(bonusNumber)) {
+            throw new RuntimeException("숫자가 중복됩니다.");
+        }
     }
 }

@@ -1,28 +1,29 @@
 package lotto;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class LottoMachine {
-    int[] hits = new int[0];
+    int[] hits = new int[5];
 
-    public void run(int ticketCount) {
+    public void run(int ticketCount) throws Exception {
         List<Ticket> tickets = makeTickets(ticketCount);
 
         WinningNumber winningNumber = new WinningNumber();
         winningNumber.inputWinningNumber();
         winningNumber.inputBonusNumber();
 
-        try {
-            matcher(tickets, winningNumber);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        matcher(tickets, winningNumber);
     }
 
-    public int buyTickets() {
+    public int buyTickets() throws RuntimeException {
+
         Input input = new Input();
         int inputMoney = input.inputInt("금액을 입력하세요.");
+
+        if (inputMoney < 1000) {
+            throw new RuntimeException("한장도 사지 못하는 금액입니다.");
+        }
+
         int ticketCount = inputMoney / 1000;
         System.out.println(ticketCount + "개를 구매했습니다.");
 
@@ -34,6 +35,7 @@ public class LottoMachine {
 
         for (int i = 0; i < ticketCount; i++) {
             tickets.add(new Ticket());
+            System.out.println(tickets.get(i));
         }
 
         return tickets;
