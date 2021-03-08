@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 public class LottoMachine {
 
     public void run() {
-
         try {
             int ticketCount = buyTickets();
             List<Ticket> tickets = makeTickets(ticketCount);
@@ -16,7 +15,9 @@ public class LottoMachine {
             winningNumber.inputBonusNumber();
 
             int[] hits = matcher(tickets, winningNumber);
-            printResult(hits, ticketCount * 1000);
+
+            Output output = new Output();
+            output.printResult(hits, ticketCount * 1000);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -25,9 +26,9 @@ public class LottoMachine {
     }
 
     private int buyTickets() {
-        Scanner scanner = new Scanner(System.in);
-        String inputMoney = scanner.nextLine();
-        int ticketCount = Integer.parseInt(inputMoney) / 1000;
+        Input input = new Input();
+        int inputMoney = input.inputInt("금액을 입력하세요.");
+        int ticketCount = inputMoney / 1000;
         System.out.println(ticketCount + "개를 구매했습니다.");
 
         return ticketCount;
@@ -84,19 +85,4 @@ public class LottoMachine {
 
         return rank;
     }
-
-    private void printResult(int[] hits, int inputMoney) {
-        Rank[] ranks = Rank.values();
-        int totalPrize = 0;
-
-        System.out.println("당첨 통계");
-        System.out.println("========");
-        for (Rank rank : ranks) {
-            System.out.println(rank.getHit() + "개 일치 (" + rank.getPrize() + "원) - " + hits[rank.ordinal()] + "개");
-            totalPrize += rank.getPrize() * hits[rank.ordinal()];
-        }
-
-        System.out.println("총 수익률은 " + (totalPrize / inputMoney) + "%입니다.");
-    }
-
 }

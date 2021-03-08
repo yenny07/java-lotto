@@ -22,4 +22,8 @@ public enum Rank {
     public int getPrize() {
         return prize;
     }
+
+    public String getString() {
+        return hit + "개 일치 (" + prize + "원) - ";
+    }
 }
