@@ -4,28 +4,23 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class LottoMachine {
+    int[] hits = new int[0];
 
-    public void run() {
+    public void run(int ticketCount) {
+        List<Ticket> tickets = makeTickets(ticketCount);
+
+        WinningNumber winningNumber = new WinningNumber();
+        winningNumber.inputWinningNumber();
+        winningNumber.inputBonusNumber();
+
         try {
-            int ticketCount = buyTickets();
-            List<Ticket> tickets = makeTickets(ticketCount);
-
-            WinningNumber winningNumber = new WinningNumber();
-            winningNumber.inputWinningNumber();
-            winningNumber.inputBonusNumber();
-
-            int[] hits = matcher(tickets, winningNumber);
-
-            Output output = new Output();
-            output.printResult(hits, ticketCount * 1000);
-
+            matcher(tickets, winningNumber);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
-    private int buyTickets() {
+    public int buyTickets() {
         Input input = new Input();
         int inputMoney = input.inputInt("금액을 입력하세요.");
         int ticketCount = inputMoney / 1000;
@@ -39,18 +34,16 @@ public class LottoMachine {
 
         for (int i = 0; i < ticketCount; i++) {
             tickets.add(new Ticket());
-            System.out.println(tickets.get(i));
         }
 
         return tickets;
     }
 
-    private int[] matcher(List<Ticket> tickets, WinningNumber winningNumber) {
-        int[] hits = new int[5];
+    private void matcher(List<Ticket> tickets, WinningNumber winningNumber) {
         long hitCount = 0;
         Rank rank = null;
 
-        for (List<Integer> ticket : tickets) {
+        for (Ticket ticket : tickets) {
             hitCount = ticket.stream()
                     .filter(winningNumber::contains)
                     .count();
@@ -59,11 +52,9 @@ public class LottoMachine {
                 hits[rank.ordinal()] += 1;
             }
         }
-
-        return hits;
     }
 
-    private Rank getRank(long hitCount, List<Integer> ticket, int bonusNumber) {
+    private Rank getRank(long hitCount, Ticket ticket, int bonusNumber) {
         Rank rank = null;
 
         switch ((int) hitCount) {
