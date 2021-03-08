@@ -6,20 +6,16 @@ import java.util.stream.Collectors;
 public class LottoMachine {
 
     public void run() {
-        int ticketCount;
-        int bonusNumber;
-        List<Ticket> tickets;
-        List<Integer> winningNumber;
-        int[] hits;
 
         try {
-            ticketCount = buyTickets();
-            tickets = makeTickets(ticketCount);
+            int ticketCount = buyTickets();
+            List<Ticket> tickets = makeTickets(ticketCount);
 
-            winningNumber = inputWinningNumber();
-            bonusNumber = inputBonusNumber();
-            hits = matcher(tickets, winningNumber, bonusNumber);
+            List<Integer> winningNumber = inputWinningNumber();
+            int bonusNumber = inputBonusNumber();
+            int[] hits = matcher(tickets, winningNumber, bonusNumber);
             printResult(hits, ticketCount * 1000);
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -32,7 +28,6 @@ public class LottoMachine {
         int ticketCount = Integer.parseInt(inputMoney) / 1000;
         System.out.println(ticketCount + "개를 구매했습니다.");
 
-        scanner.close();
         return ticketCount;
     }
 
@@ -41,7 +36,7 @@ public class LottoMachine {
 
         for (int i = 0; i < ticketCount; i++) {
             tickets.add(new Ticket());
-            // System.out.println(tickets.get(i));
+            System.out.println(tickets.get(i));
         }
 
         return tickets;
@@ -49,26 +44,22 @@ public class LottoMachine {
 
 
     private List<Integer> inputWinningNumber() {
-        System.out.println("지난 주 당첨 번호를 입력해주세요.");
-        Scanner scanner = new Scanner(System.in);
-        String inputString = scanner.nextLine();
+        Input input = new Input();
+        String inputString = input.inputLine("지난 주 당첨 번호를 입력해주세요.");
 
         List<String> stringNumber = Arrays.asList(inputString.split(","));
         List<Integer> winningNumber = stringNumber.stream()
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
 
-        scanner.close();
         return winningNumber;
     }
 
     private int inputBonusNumber() {
-        System.out.println("보너스 번호를 입력해주세요.");
-        Scanner scanner = new Scanner(System.in);
-        String bonusNumber = scanner.nextLine();
+        Input input = new Input();
+        int bonusNumber = input.inputInt("보너스 번호를 입력해주세요.");
 
-        scanner.close();
-        return Integer.parseInt(bonusNumber);
+        return bonusNumber;
     }
 
     private int[] matcher(List<Ticket> tickets, List<Integer> winningNumber, int bonusNumber) {
