@@ -8,17 +8,22 @@ public class LottoMachine {
     public void run() {
         int ticketCount;
         int bonusNumber;
-        List<List<Integer>> tickets;
+        List<Ticket> tickets;
         List<Integer> winningNumber;
         int[] hits;
 
-        ticketCount = buyTickets();
-        tickets = makeTickets(ticketCount);
+        try {
+            ticketCount = buyTickets();
+            tickets = makeTickets(ticketCount);
 
-        winningNumber = inputWinningNumber();
-        bonusNumber = inputBonusNumber();
-        hits = matcher(tickets, winningNumber, bonusNumber);
-        printResult(hits, ticketCount * 1000);
+            winningNumber = inputWinningNumber();
+            bonusNumber = inputBonusNumber();
+            hits = matcher(tickets, winningNumber, bonusNumber);
+            printResult(hits, ticketCount * 1000);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private int buyTickets() {
@@ -31,30 +36,17 @@ public class LottoMachine {
         return ticketCount;
     }
 
-    private List<List<Integer>> makeTickets(int ticketCount) {
-        List<List<Integer>> tickets = new ArrayList<>();
+    private List<Ticket> makeTickets(int ticketCount) {
+        List<Ticket> tickets = new ArrayList<>();
 
         for (int i = 0; i < ticketCount; i++) {
-            tickets.add(createNumbers());
-            System.out.println(tickets.get(i));
+            tickets.add(new Ticket());
+            // System.out.println(tickets.get(i));
         }
 
         return tickets;
     }
 
-    private List<Integer> createNumbers() {
-        List<Integer> ticket = new ArrayList<>();
-
-        for (int i = 1; i <= 45; i++) {
-            ticket.add(i);
-        }
-
-        Collections.shuffle(ticket);
-        ticket = ticket.subList(0, 6);
-        Collections.sort(ticket);
-
-        return ticket;
-    }
 
     private List<Integer> inputWinningNumber() {
         System.out.println("지난 주 당첨 번호를 입력해주세요.");
@@ -79,7 +71,7 @@ public class LottoMachine {
         return Integer.parseInt(bonusNumber);
     }
 
-    private int[] matcher(List<List<Integer>> tickets, List<Integer> winningNumber, int bonusNumber) {
+    private int[] matcher(List<Ticket> tickets, List<Integer> winningNumber, int bonusNumber) {
         int[] hits = new int[5];
         long hitCount = 0;
         Rank rank;
