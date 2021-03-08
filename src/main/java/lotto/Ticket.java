@@ -3,7 +3,7 @@ package lotto;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Ticket extends ArrayList<Integer>{
+public class Ticket extends ArrayList<Integer> {
 
     public Ticket() {
         createNumbers();
@@ -15,11 +15,8 @@ public class Ticket extends ArrayList<Integer>{
             this.add(i);
         }
 
-        Collections.shuffle(this); // 됨
-        for (int i = 6; i <= 45; i++) {
-            this.remove(i);
-        }
-        Collections.sort(this); // 됨
-
+        Collections.shuffle(this);
+        this.subList(6, 45).clear();
+        Collections.sort(this);
     }
 }
