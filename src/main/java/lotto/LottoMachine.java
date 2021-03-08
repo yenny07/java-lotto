@@ -11,9 +11,11 @@ public class LottoMachine {
             int ticketCount = buyTickets();
             List<Ticket> tickets = makeTickets(ticketCount);
 
-            List<Integer> winningNumber = inputWinningNumber();
-            int bonusNumber = inputBonusNumber();
-            int[] hits = matcher(tickets, winningNumber, bonusNumber);
+            WinningNumber winningNumber = new WinningNumber();
+            winningNumber.inputWinningNumber();
+            winningNumber.inputBonusNumber();
+
+            int[] hits = matcher(tickets, winningNumber);
             printResult(hits, ticketCount * 1000);
 
         } catch (Exception e) {
@@ -42,37 +44,17 @@ public class LottoMachine {
         return tickets;
     }
 
-
-    private List<Integer> inputWinningNumber() {
-        Input input = new Input();
-        String inputString = input.inputLine("지난 주 당첨 번호를 입력해주세요.");
-
-        List<String> stringNumber = Arrays.asList(inputString.split(","));
-        List<Integer> winningNumber = stringNumber.stream()
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());
-
-        return winningNumber;
-    }
-
-    private int inputBonusNumber() {
-        Input input = new Input();
-        int bonusNumber = input.inputInt("보너스 번호를 입력해주세요.");
-
-        return bonusNumber;
-    }
-
-    private int[] matcher(List<Ticket> tickets, List<Integer> winningNumber, int bonusNumber) {
+    private int[] matcher(List<Ticket> tickets, WinningNumber winningNumber) {
         int[] hits = new int[5];
         long hitCount = 0;
-        Rank rank;
+        Rank rank = null;
 
         for (List<Integer> ticket : tickets) {
             hitCount = ticket.stream()
                     .filter(winningNumber::contains)
                     .count();
             if (hitCount >= 3) {
-                rank = getRank(hitCount, ticket, bonusNumber);
+                rank = getRank(hitCount, ticket, winningNumber.getBonusNumber());
                 hits[rank.ordinal()] += 1;
             }
         }
@@ -114,7 +96,7 @@ public class LottoMachine {
             totalPrize += rank.getPrize() * hits[rank.ordinal()];
         }
 
-        System.out.println("총 수익률은 " + (totalPrize / inputMoney) + "입니다.");
+        System.out.println("총 수익률은 " + (totalPrize / inputMoney) + "%입니다.");
     }
 
 }
