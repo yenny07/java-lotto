@@ -9,6 +9,10 @@ public class Ticket extends ArrayList<Integer> {
         createNumbers();
     }
 
+    public Ticket(ArrayList<Integer> testInput) {
+        this.addAll(testInput);
+    }
+
     private void createNumbers() {
 
         for (int i = 1; i <= 45; i++) {

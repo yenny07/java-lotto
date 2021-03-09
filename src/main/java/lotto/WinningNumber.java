@@ -9,6 +9,14 @@ public class WinningNumber extends ArrayList<Integer> {
 
     private int bonusNumber;
 
+    public WinningNumber() {
+    }
+
+    public WinningNumber(ArrayList<Integer> testInput, int testBonusNumber) {
+        this.addAll(testInput);
+        this.bonusNumber = testBonusNumber;
+    }
+
     public int getBonusNumber() {
         return bonusNumber;
     }

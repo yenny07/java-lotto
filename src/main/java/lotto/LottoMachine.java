@@ -15,21 +15,6 @@ public class LottoMachine {
         matcher(tickets, winningNumber);
     }
 
-    public int buyTickets() throws RuntimeException {
-
-        Input input = new Input();
-        int inputMoney = input.inputInt("금액을 입력하세요.");
-
-        if (inputMoney < 1000) {
-            throw new RuntimeException("한장도 사지 못하는 금액입니다.");
-        }
-
-        int ticketCount = inputMoney / 1000;
-        System.out.println(ticketCount + "개를 구매했습니다.");
-
-        return ticketCount;
-    }
-
     private List<Ticket> makeTickets(int ticketCount) {
         List<Ticket> tickets = new ArrayList<>();
 
