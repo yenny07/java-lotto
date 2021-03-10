@@ -1,16 +1,5 @@
 package lotto;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-
-import static java.lang.System.exit;
-import static spark.Spark.get;
-
 public class WebUILottoApplication {
     public static void main(String[] args) {
         LottoMachine lottoMachine = new LottoMachine();
@@ -20,12 +9,9 @@ public class WebUILottoApplication {
         try {
             ticketCount = buyTickets();
             yield = lottoMachine.run(ticketCount);
-            //System.out.println(Arrays.toString(lottoMachine.hits));
 
-            Output output = new Output();
-            output.printResult(lottoMachine.hits);
-
-            output.printYield(yield);
+            Output.printResult(lottoMachine.hits);
+            Output.printYield(yield);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -41,7 +27,7 @@ public class WebUILottoApplication {
         }
 
         int ticketCount = inputMoney / 1000;
-        System.out.println(ticketCount + "개를 구매했습니다.");
+        Output.printTicketCount(ticketCount);
 
         return ticketCount;
     }

@@ -20,7 +20,9 @@ public class WinningNumber {
         return bonusNumber;
     }
 
-    public ArrayList<Integer> getSixNumbers() { return sixNumbers; }
+    public ArrayList<Integer> getSixNumbers() {
+        return sixNumbers;
+    }
 
     public void inputWinningNumber() {
         Input input = new Input();

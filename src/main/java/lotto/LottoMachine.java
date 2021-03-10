@@ -22,8 +22,9 @@ public class LottoMachine {
 
         for (int i = 0; i < ticketCount; i++) {
             tickets.add(new Ticket());
-            System.out.println(tickets.get(i));
         }
+
+        Output.printTickets(tickets);
 
         return tickets;
     }
