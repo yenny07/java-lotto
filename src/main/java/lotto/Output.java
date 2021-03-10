@@ -8,12 +8,14 @@ public class Output {
 
         System.out.println("당첨 통계");
         System.out.println("========");
+
         for (Rank rank : ranks) {
-            System.out.println(rank.getString() + hits[rank.ordinal()] + "개");
-            totalPrize += rank.getPrize() * hits[rank.ordinal()];
+            printRankElement(rank.getHit(), rank.getPrize(), hits[rank.ordinal()]);
         }
 
-        System.out.println("총 수익률은 " + (totalPrize / inputMoney) + "입니다.");
     }
 
+    public void printRankElement(int hit, int prize, int hitCount) {
+        System.out.println(hit + "개 일치 (" + prize + "원) -" + hitCount + "개");
+    }
 }
