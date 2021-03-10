@@ -5,7 +5,8 @@ public enum Rank {
     FOUR(4, 50000),
     FIVE(5, 1500000),
     BONUS(5, 30000000),
-    SIX(6, 2000000000);
+    SIX(6, 2000000000),
+    NONE(0, 0);
 
     private final int hit;
     private final int prize;
@@ -24,25 +25,17 @@ public enum Rank {
     }
 
     public Rank getRank(long hitCount, Ticket ticket, int bonusNumber) {
-        Rank rank = null;
-
         switch ((int) hitCount) {
             case 3:
-                rank = Rank.THREE;
-                break;
+                return Rank.THREE;
             case 4:
-                rank = Rank.FOUR;
-                break;
+                return Rank.FOUR;
             case 5:
-                rank = (ticket.contains(bonusNumber)) ? Rank.BONUS : Rank.FIVE;
-                break;
+                return (ticket.contains(bonusNumber)) ? Rank.BONUS : Rank.FIVE;
             case 6:
-                rank = Rank.SIX;
-                break;
+                return Rank.SIX;
             default:
-                rank = null;
+                return Rank.NONE;
         }
-
-        return rank;
     }
 }

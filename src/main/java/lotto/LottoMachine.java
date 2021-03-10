@@ -3,9 +3,9 @@ package lotto;
 import java.util.*;
 
 public class LottoMachine {
-    int[] hits = new int[5];
+    int[] hits = new int[6];
 
-    public void run(int ticketCount) throws Exception {
+    public double run(int ticketCount) throws Exception {
         List<Ticket> tickets = makeTickets(ticketCount);
 
         WinningNumber winningNumber = new WinningNumber();
@@ -13,6 +13,8 @@ public class LottoMachine {
         winningNumber.inputBonusNumber();
 
         matcher(tickets, winningNumber);
+
+        return calculateYield(ticketCount);
     }
 
     private List<Ticket> makeTickets(int ticketCount) {
@@ -28,18 +30,27 @@ public class LottoMachine {
 
     private void matcher(List<Ticket> tickets, WinningNumber winningNumber) {
         long hitCount = 0;
-        Rank rank = null;
+        Rank rank = Rank.NONE;
 
         for (Ticket ticket : tickets) {
             hitCount = ticket.stream()
                     .filter(winningNumber::contains)
                     .count();
             if (hitCount >= 3) {
-                rank.getRank(hitCount, ticket, winningNumber.getBonusNumber());
+                rank = rank.getRank(hitCount, ticket, winningNumber.getBonusNumber());
                 hits[rank.ordinal()] += 1;
             }
         }
     }
 
+    private double calculateYield(int ticketCount) {
+        Rank[] ranks = Rank.values();
+        int totalPrize = 0;
 
+        for (Rank rank : ranks) {
+            totalPrize += rank.getPrize() * hits[rank.ordinal()];
+        }
+
+        return (double) totalPrize / (ticketCount * 1000);
+    }
 }
