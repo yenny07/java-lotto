@@ -33,7 +33,7 @@ public class LottoMachine {
 
         for (Ticket ticket : tickets) {
             hitCount = ticket.stream()
-                    .filter(winningNumber::contains)
+                    .filter(winningNumber.getSixNumbers()::contains)
                     .count();
             calculateHits(winningNumber, hitCount, ticket);
         }

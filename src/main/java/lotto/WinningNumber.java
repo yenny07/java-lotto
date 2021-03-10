@@ -1,25 +1,26 @@
 package lotto;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
-public class WinningNumber extends ArrayList<Integer> {
-
+public class WinningNumber {
+    private ArrayList<Integer> sixNumbers;
     private int bonusNumber;
 
     public WinningNumber() {
+        sixNumbers = new ArrayList<>();
+        bonusNumber = 0;
     }
 
     public WinningNumber(ArrayList<Integer> testInput, int testBonusNumber) {
-        this.addAll(testInput);
-        this.bonusNumber = testBonusNumber;
+        sixNumbers = new ArrayList<>(testInput);
+        bonusNumber = testBonusNumber;
     }
 
     public int getBonusNumber() {
         return bonusNumber;
     }
+
+    public ArrayList<Integer> getSixNumbers() { return sixNumbers; }
 
     public void inputWinningNumber() {
         Input input = new Input();
@@ -28,7 +29,7 @@ public class WinningNumber extends ArrayList<Integer> {
         String[] stringNumber = inputString.split(",");
 
         for (String num : stringNumber) {
-            this.add(Integer.parseInt(num));
+            sixNumbers.add(Integer.parseInt(num));
         }
     }
 
@@ -36,7 +37,7 @@ public class WinningNumber extends ArrayList<Integer> {
         Input input = new Input();
         bonusNumber = input.inputInt("보너스 번호를 입력해주세요.");
 
-        if (this.contains(bonusNumber)) {
+        if (sixNumbers.contains(bonusNumber)) {
             throw new RuntimeException("숫자가 중복됩니다.");
         }
     }
