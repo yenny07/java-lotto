@@ -23,7 +23,26 @@ public enum Rank {
         return prize;
     }
 
-    public String getString() {
-        return hit + "개 일치 (" + prize + "원) - ";
+    public Rank getRank(long hitCount, Ticket ticket, int bonusNumber) {
+        Rank rank = null;
+
+        switch ((int) hitCount) {
+            case 3:
+                rank = Rank.THREE;
+                break;
+            case 4:
+                rank = Rank.FOUR;
+                break;
+            case 5:
+                rank = (ticket.contains(bonusNumber)) ? Rank.BONUS : Rank.FIVE;
+                break;
+            case 6:
+                rank = Rank.SIX;
+                break;
+            default:
+                rank = null;
+        }
+
+        return rank;
     }
 }

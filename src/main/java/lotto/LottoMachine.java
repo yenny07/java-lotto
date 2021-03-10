@@ -35,32 +35,11 @@ public class LottoMachine {
                     .filter(winningNumber::contains)
                     .count();
             if (hitCount >= 3) {
-                rank = getRank(hitCount, ticket, winningNumber.getBonusNumber());
+                rank.getRank(hitCount, ticket, winningNumber.getBonusNumber());
                 hits[rank.ordinal()] += 1;
             }
         }
     }
 
-    private Rank getRank(long hitCount, Ticket ticket, int bonusNumber) {
-        Rank rank = null;
 
-        switch ((int) hitCount) {
-            case 3:
-                rank = Rank.THREE;
-                break;
-            case 4:
-                rank = Rank.FOUR;
-                break;
-            case 5:
-                rank = (ticket.contains(bonusNumber)) ? Rank.BONUS : Rank.FIVE;
-                break;
-            case 6:
-                rank = Rank.SIX;
-                break;
-            default:
-                rank = null;
-        }
-
-        return rank;
-    }
 }
