@@ -5,8 +5,7 @@ public enum Rank {
     FOUR(4, 50000),
     FIVE(5, 1500000),
     BONUS(5, 30000000),
-    SIX(6, 2000000000),
-    NONE(0, 0);
+    SIX(6, 2000000000);
 
     private final int hit;
     private final int prize;
@@ -24,7 +23,7 @@ public enum Rank {
         return prize;
     }
 
-    public Rank getRank(long hitCount, Ticket ticket, int bonusNumber) {
+    public static Rank getRank(long hitCount, Ticket ticket, int bonusNumber) {
         switch ((int) hitCount) {
             case 3:
                 return Rank.THREE;
@@ -35,7 +34,7 @@ public enum Rank {
             case 6:
                 return Rank.SIX;
             default:
-                return Rank.NONE;
+                return null;
         }
     }
 }

@@ -3,7 +3,7 @@ package lotto;
 import java.util.*;
 
 public class LottoMachine {
-    int[] hits = new int[6];
+    int[] hits = new int[5];
 
     public double run(int ticketCount) throws Exception {
         List<Ticket> tickets = makeTickets(ticketCount);
@@ -30,16 +30,19 @@ public class LottoMachine {
 
     private void matcher(List<Ticket> tickets, WinningNumber winningNumber) {
         long hitCount = 0;
-        Rank rank = Rank.NONE;
 
         for (Ticket ticket : tickets) {
             hitCount = ticket.stream()
                     .filter(winningNumber::contains)
                     .count();
-            if (hitCount >= 3) {
-                rank = rank.getRank(hitCount, ticket, winningNumber.getBonusNumber());
-                hits[rank.ordinal()] += 1;
-            }
+            calculateHits(winningNumber, hitCount, ticket);
+        }
+    }
+
+    private void calculateHits(WinningNumber winningNumber, long hitCount, Ticket ticket) {
+        if (hitCount >= 3) {
+            Rank rank = Rank.getRank(hitCount, ticket, winningNumber.getBonusNumber());
+            hits[rank.ordinal()] += 1;
         }
     }
 
